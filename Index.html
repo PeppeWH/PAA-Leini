@@ -8,10 +8,47 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 <meta name="theme-color" content="#2c4a9c"/>
 <link rel="apple-touch-icon" sizes="180x180" 
-      href="https://raw.githubusercontent.com/PeppeWH/appscuola/main/iconPAA_180.png"/>
+      href="https://raw.githubusercontent.com/PeppeWH/appscuola/main/apple-touch-icon.png"/>
 <link rel="apple-touch-icon-precomposed" sizes="180x180" 
-      href="https://raw.githubusercontent.com/PeppeWH/appscuola/main/iconPAA_180.png"/>
+      href="https://raw.githubusercontent.com/PeppeWH/appscuola/main/apple-touch-icon.png"/>
 <title>PAA IC Leinì</title>
-</p>
+<style>
+  body{margin:0;background:#2c4a9c;display:flex;align-items:center;
+       justify-content:center;min-height:100vh;flex-direction:column;gap:16px;
+       text-align:center;padding:24px;box-sizing:border-box}
+  img{width:80px;height:80px;border-radius:18px}
+  p{color:rgba(255,255,255,.7);font-family:sans-serif;font-size:14px;margin:0}
+  button{background:#fff;color:#2c4a9c;border:none;border-radius:10px;
+         padding:12px 24px;font-size:16px;font-weight:600;font-family:sans-serif;
+         display:none}
+</style>
+</head>
+<body>
+<img src="https://raw.githubusercontent.com/PeppeWH/appscuola/main/apple-touch-icon.png"/>
+<p id="msg">Apertura in corso…</p>
+<button id="apriBtn" onclick="vaiAllApp()">Apri l'app</button>
+
+<script>
+  const APP_URL = "https://script.google.com/a/macros/comprensivoleini.edu.it/s/AKfycbwHrHgkljTspAtGrG4YcZEHup5B-d0wO17ldppDqEyGkmvZXVGgVYJLGDuiPaJ6_KmQ/exec";
+
+  function vaiAllApp(){ window.location.replace(APP_URL); }
+
+  const isStandalone = window.navigator.standalone === true; // true solo se aperta dall'icona sulla Home (iOS)
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+  if (isStandalone) {
+    // Aperta dall'icona sulla Home → vai dritto all'app
+    vaiAllApp();
+  } else if (isIOS) {
+    // Aperta da Safari normale → NIENTE redirect automatico,
+    // tutto il tempo per "Condividi → Aggiungi a Home"
+    document.getElementById("msg").textContent =
+      "Tocca Condividi → Aggiungi a Home per installare l'app, oppure apri direttamente:";
+    document.getElementById("apriBtn").style.display = "inline-block";
+  } else {
+    // Android/desktop: nessun problema di icona, redirect normale
+    setTimeout(vaiAllApp, 800);
+  }
+</script>
 </body>
 </html>
